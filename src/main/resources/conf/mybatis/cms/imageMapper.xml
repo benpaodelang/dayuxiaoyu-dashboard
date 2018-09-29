@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ImageModel">
+  <resultMap id="BaseResultMap" type="ImageModel">
+    <id column="id" property="id" />
+    <result column="url" property="url" />
+    <result column="name" property="name" />
+    <result column="create_time" property="createTime" />
+    <result column="type" property="type" />
+    <result column="category_id" property="categoryId" />
+  </resultMap>
+  <sql id="base_column">
+    url,name,create_time,type,categroy_id
+  </sql>
+  <sql id="all_column">
+    id,<include refid="base_column"/>
+  </sql>
+  <sql id="insertColumns">
+    <trim suffixOverrides=",">
+      <if test="url != null">
+        url,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="categoryId != null">
+        category_id,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+  </sql>
+  <sql id="insertValues">
+    <trim suffixOverrides=",">
+      <if test="url != null">
+        #{url},
+      </if>
+      <if test="name != null">
+        #{name},
+      </if>
+      <if test="type != null">
+        #{type},
+      </if>
+      <if test="categoryId != null">
+        #{categoryId},
+      </if>
+      <if test="createTime != null">
+        #{createTime},
+      </if>
+    </trim>
+  </sql>
+  <insert id="addEntity" parameterType="ImageModel">
+    insert into image(<include refid="insertColumns"/>) values (<include refid="insertValues"/>)
+  </insert>
+  <update id="updateEntityByCond" parameterType="java.util.Map">
+    update image
+    <set>
+      <if test="value != null and value.url != null">
+        url = #{value.url},
+      </if>
+      <if test="value != null and value.name != null">
+        name = #{value.name},
+      </if>
+      <if test="value != null and value.type != null">
+        type = #{value.type},
+      </if>
+      <if test="value != null and value.categoryId != null">
+        category_id = #{value.categoryId},
+      </if>
+      <if test="value != null and value.createTime != null">
+        create_time = #{value.createTime},
+      </if>
+    </set>
+    <include refid="dynamic_where" />
+  </update>
+  <delete id="deleteEntity" parameterType="java.util.Map">
+    delete from image <include refid="dynamic_where" />
+  </delete>
+  <select id="findEntityById" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select <include refid="dynamic_output"/> from image <include refid="dynamic_where"/>
+  </select>
+  <select id="findEntityListByCond" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select <include refid="dynamic_output"/> from image <include refid="dynamic_where"/> order by create_time desc
+  </select>
+  <sql id="dynamic_where">
+    <where>
+      <if test="input != null and input.url != null">
+        and url = #{input.url}
+      </if>
+      <if test="input != null and input.name != null">
+        and name = #{input.name}
+      </if>
+      <if test="input != null and input.nameQuery != null">
+        and name LIKE concat(#{input.nameQuery},'%')
+      </if>
+      <if test="input != null and input.createTime != null">
+        and create_time = #{input.createTime}
+      </if>
+      <if test="input != null and input.type != null">
+        and type = #{input.type}
+      </if>
+      <if test="input != null and input.categoryId != null">
+        and category_id = #{input.categoryId}
+      </if>
+      <if test="input != null and input.id != null">
+        and id = #{input.id}
+      </if>
+      <if test="input != null and input.inIdList != null and input.inIdList.size >0 ">
+        and id in <foreach collection="input.inIdList" index="index" item="item" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+    </where>
+  </sql>
+  <sql id="dynamic_output">
+    <trim suffixOverrides=",">
+      <if test="output != null and output.url != null">
+        url,
+      </if>
+      <if test="output != null and output.name != null">
+        name,
+      </if>
+      <if test="output != null and output.type != null">
+        type,
+      </if>
+      <if test="output != null and output.categoryId != null">
+        category_id,
+      </if>
+      <if test="output != null and output.createTime != null">
+        create_time,
+      </if>
+      <if test="output != null and output.id != null">
+        id,
+      </if>
+    </trim>
+  </sql>
+</mapper>

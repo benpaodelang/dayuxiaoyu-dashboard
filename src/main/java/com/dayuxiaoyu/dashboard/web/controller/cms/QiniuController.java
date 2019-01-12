@@ -72,7 +72,7 @@ public class QiniuController {
 
             Map<String,Object> result = new HashMap<String, Object>();
             result.put("state","SUCCESS");
-            result.put("url","http://image.dayuxiao.com/"+putRet.key);
+            result.put("url","http://image.dayuxiaoyu.com/"+putRet.key);
             result.put("title",putRet.key);
             result.put("original",fileName);
             result.put("type",type);
@@ -95,7 +95,7 @@ public class QiniuController {
         config.put("imageCompressEnable",true);
         config.put("imageCompressBorder",1600);
         config.put("imageInsertAlign","none");
-        config.put("imageUrlPrefix","http://image.dayuxiao.com/");
+        config.put("imageUrlPrefix","http://image.dayuxiaoyu.com/");
         config.put("imagePathFormat","");
 
         return config;
